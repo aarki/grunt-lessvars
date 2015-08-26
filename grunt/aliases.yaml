@@ -1,0 +1,13 @@
+test:
+- 'mocha_istanbul'
+
+lint:
+- 'jshint'
+
+style:
+- 'jscs'
+
+default:
+- 'test'
+- 'lint'
+- 'style'

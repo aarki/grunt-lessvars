@@ -8,43 +8,63 @@
 
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
+    var fs = require('fs'),
+        async = require('async'),
+        merge = require('merge'),
+        Q = require('q');
 
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
+    var extractor = require('./lib/extractor'),
+        formatter = require('./lib/formatter');
 
-  grunt.registerMultiTask('lessvars', 'Parse a set of LESS files, extract variables, and write to a JavaScript file.', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      punctuation: '.',
-      separator: ', '
+    grunt.registerMultiTask('lessvars', 'Parse a set of LESS files, extract variables, and write to a JavaScript file.', function () {
+        var done = this.async(),
+            files = this.files,
+            options = this.options({
+                format: 'json',
+                module: 'less',
+                constant: 'vars',
+                indent: 0
+            }),
+            destPromises = [];
+
+        // read each src/dest pair
+        files.forEach(function (file) {
+            var dest = file.dest,
+                srcPromises = [];
+
+            // asynchronously read each source, and extract variables from it
+            file.src.forEach(function (src) {
+                srcPromises.push(
+                    Q.nfcall(fs.readFile, src)
+                        .then(function (contents) {
+                            return extractor.process(contents, options);
+                        })
+                );
+            });
+
+            // wait for all sources to process, merge results into single promise
+            destPromises.push(
+                Q.all(srcPromises)
+                    .then(function (results) {
+                        return {
+                            dest: dest,
+                            data: merge.apply(null, results)
+                        };
+                    })
+            );
+        });
+
+        // grab format function
+        var format = formatter[options.format];
+
+        // wait for all src/dest pairs to resolve
+        Q.all(destPromises)
+            .then(function (results) {
+                async.each(results, function (file, done) {
+                    fs.writeFile(file.dest, format(file.data, options), done);
+                }, done);
+            });
     });
-
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
-        }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
-
-      // Handle options.
-      src += options.punctuation;
-
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
-
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
-    });
-  });
 
 };
