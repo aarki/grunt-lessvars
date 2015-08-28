@@ -1,4 +1,5 @@
 test:
+- 'babel'
 - 'mocha_istanbul'
 
 lint:

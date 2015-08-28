@@ -15,5 +15,6 @@
   "disallowSpacesInFunctionDeclaration": {
     "beforeOpeningRoundBrace": true
   },
-  "disallowSpacesInCallExpression": true
+  "disallowSpacesInCallExpression": true,
+  "esnext": true
 }

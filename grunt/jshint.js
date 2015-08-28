@@ -4,7 +4,7 @@ module.exports = {
     options: {
         jshintrc: '.jshintrc'
     },
-    src: [ 'tasks/**/*.js' ],
+    src: [ 'src/**/*.js' ],
     test: [ 'test/**/*.js', '!test/case/**/*.js' ],
     meta: [ 'Gruntfile.js', 'grunt/*.js' ]
 };
