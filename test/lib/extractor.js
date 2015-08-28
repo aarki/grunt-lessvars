@@ -1,21 +1,7 @@
-'use strict';
+import expect from '../util/expect';
+import {process} from '../../src/lib/extractor';
 
-var expect = require('../util/expect'),
-    extractor = require('../../tasks/lib/extractor');
-
-function vars(obj) {
-    var lines = [];
-
-    for (var key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            lines.push('@' + key + ': ' + obj[ key ] + ';');
-        }
-    }
-
-    return lines.join('\n');
-}
-
-describe('extractor', function () {
+describe('extractor', () => {
 
     it('should parse simple variable declarations', function () {
         var contents = vars({
@@ -24,7 +10,7 @@ describe('extractor', function () {
             z: '@x + @y'
         });
 
-        return expect(extractor.process(contents)).to.eventually.eql({
+        return expect(process(contents)).to.eventually.eql({
             x: 2,
             y: 2,
             z: 4
@@ -38,7 +24,7 @@ describe('extractor', function () {
         });
         contents += 'body { font-size: 20px; }';
 
-        return expect(extractor.process(contents)).to.eventually.eql({
+        return expect(process(contents)).to.eventually.eql({
             x: '2px'
         });
     });
@@ -46,9 +32,19 @@ describe('extractor', function () {
     it('should parse nested variable declarations', function () {
         var contents = 'a {' + vars({ red: 'red' }) + ' color: @red; }';
 
-        return expect(extractor.process(contents)).to.eventually.eql({
+        return expect(process(contents)).to.eventually.eql({
             red: 'red'
         });
     });
 
 });
+
+function vars(obj) {
+    const lines = [];
+
+    for (let key of Object.keys(obj)) {
+        lines.push('@' + key + ': ' + obj[ key ] + ';');
+    }
+
+    return lines.join('\n');
+}

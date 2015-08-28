@@ -8,6 +8,7 @@
 
 'use strict';
 
+require('babel/register');
 module.exports = function (grunt) {
-    require('load-grunt-config')(grunt);
+    require('load-grunt-config')(grunt, { jitGrunt: { customTasksDir: 'src' } });
 };

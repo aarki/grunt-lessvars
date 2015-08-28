@@ -1,6 +1,6 @@
 test:
-- 'babel'
-- 'mocha_istanbul'
+- 'lessvars'
+- 'mochaTest'
 
 lint:
 - 'jshint'

@@ -34,9 +34,11 @@ export default grunt => {
         // format output
         const format = formatter[options.format];
         all(promises).then(results => {
-            async.each(results, (file, done) => {
-                writeFile(file.dest, format(file.data, options), done);
-            }, done);
+            async.each(results, (file, next) => {
+                writeFile(file.dest, format(file.data, options), next);
+            }, function () {
+                done();
+            });
         });
     });
 };
