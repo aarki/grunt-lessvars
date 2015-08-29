@@ -10,7 +10,7 @@ var _changeCase = require('change-case');
 var _less = require('less');
 
 function process(contents, options) {
-    return (0, _less.parse)(contents + '', options).then(function (root) {
+    return (0, _less.parse)(contents.toString(), options).then(function (root) {
         return collect(root, new _less.contexts.Eval({}, [(0, _less.transformTree)(root)]));
     });
 }
@@ -25,9 +25,7 @@ function collect(node, context) {
         for (var _iterator = node.rules[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var rule = _step.value;
 
-            if (rule.isRuleset) {
-                collect(rule, context, variables);
-            } else if (rule.variable === true) {
+            if (rule.isRuleset) collect(rule, context, variables);else if (rule.importedFilename) collect(rule.root, context, variables);else if (rule.variable === true) {
                 var _name = rule.name.substring(1);
                 var value = rule.value.eval(context).toCSS(context);
 
