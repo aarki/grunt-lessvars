@@ -127,6 +127,11 @@ angular.module("myModule").constant("myLessVars", {
 
 ## Contributing
 
+All source code, tests, and meta-code (build tools and configuration) are written in EcmaScript 6 and transpiled using
+[Babel](http://babeljs.io/). The command `grunt babel` will transpile the `src` directory into the `tasks` directory
+which allows this module to be dropped in as a Grunt plugin. The Babel runtime/polyfill is **not** used outside of
+developer tools, and we would like to keep it this way.
+
 ### Code style `grunt style`
 Code style is enforced using [JSCS](http://jscs.info/). The style guide is located in `.jscsrc`.
 
