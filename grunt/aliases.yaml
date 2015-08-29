@@ -1,6 +1,8 @@
 test:
+- 'istanbul:instrument'
 - 'lessvars'
-- 'mochaTest'
+- 'mocha'
+- 'istanbul:report'
 
 lint:
 - 'jshint'
