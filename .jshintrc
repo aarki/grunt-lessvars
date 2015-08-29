@@ -1,13 +1,9 @@
 {
-  "curly": true,
   "eqeqeq": true,
-  "immed": true,
-  "newcap": true,
   "noarg": true,
-  "sub": true,
+  "nocomma": true,
   "undef": true,
   "boss": true,
-  "eqnull": true,
   "node": true,
   "mocha": true,
   "esnext": true

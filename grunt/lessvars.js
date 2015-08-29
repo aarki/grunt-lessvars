@@ -30,7 +30,7 @@ function caseConfig(folder, options={}) {
     const src = files.filter(path => path.startsWith('input'));
     const exp = files.filter(path => path.startsWith('expected'))[0];
     const ext = extname(exp);
-    const act = 'actual' + ext;
+    const act = `actual${ ext }`;
 
     return {
         options: options,

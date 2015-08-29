@@ -2,9 +2,9 @@ export default { json, angular };
 
 function json(data, options) {
     const indent = options.indent;
-    if (indent) {
+
+    if (indent)
         return JSON.stringify(data, null, indent);
-    }
 
     return JSON.stringify(data);
 }

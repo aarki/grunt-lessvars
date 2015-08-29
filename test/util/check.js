@@ -7,13 +7,12 @@ export default function check(folder) {
     const files = readdirSync(folder);
     const exp = join(folder, files.filter(path => path.startsWith('expected'))[0]);
     const ext = extname(exp);
-    const act = join(folder, 'actual' + ext);
+    const act = join(folder, `actual${ext}`);
 
-    return (done) => {
-        return all([ nfcall(readFile, exp), nfcall(readFile, act) ])
-            .then(([ expContents, actContents ]) => {
-                expect((actContents + '').trim()).to.equal((expContents + '').trim());
+    return done =>
+        all([ nfcall(readFile, exp), nfcall(readFile, act) ])
+            .then(contents => {
+                expect((contents[1].toString()).trim()).to.equal((contents[0].toString()).trim());
             })
             .then(done, done);
-    };
 }

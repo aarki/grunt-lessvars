@@ -8,6 +8,7 @@ import formatter from './lib/formatter';
 
 export default grunt => {
     const description = "Parse a set of LESS files, extract variables, and write to a JavaScript file.";
+
     grunt.registerMultiTask('lessvars', description, function () {
         const done = this.async();
         const files = this.files;
@@ -32,7 +33,9 @@ export default grunt => {
         });
 
         // format output
-        const format = typeof options.format === 'function' ? options.format :  formatter[options.format];
+        const format = typeof options.format === 'function' ? options.format : formatter[options.format];
+
+        // wait for all files to get parsed, then write the results
         all(promises).then(results => {
             async.each(results, (file, next) => {
                 writeFile(file.dest, format(file.data, options), next);

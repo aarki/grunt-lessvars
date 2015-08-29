@@ -24,6 +24,7 @@ export default grunt => {
         // hook into require, pass code through babel-istanbul's instrumenter
         if (flags.instrument) {
             const instrumenter = new Instrumenter({ coverageVariable });
+
             hook.hookRequire(file => sources.includes(file), (code, file) => instrumenter.instrumentSync(code, file));
         }
 
@@ -32,6 +33,7 @@ export default grunt => {
         if (flags.report) {
             const collector = new Collector();
             const reporter = new Reporter();
+
             collector.add(global[ coverageVariable ]);
             reporter.addAll([ 'text', 'html' ]);
 
