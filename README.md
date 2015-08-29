@@ -41,30 +41,30 @@ grunt.initConfig({
 ### Options
 
 #### options.format
-Type: `String|Function`
+Type: `String|Function(vars:Object, options:Object):String`
 Default value: `"json"`
 
-Format of the output file. Can be one of `"json"`, `"angular"`, or a custom function. The function signature should be
-`format(vars:Object, options:Object)`.
+How to format the output. Can be one of `"json"`, `"angular"`, or a custom formatter function. The function is given
+an object containing the variables, and the processed task options.
 
 #### options.indent
 Type: `Number`
 Default value: `0`
 
-Control the identation level of the output for both `"json"` and `"angular"` formatters. Pass `2` to pretty-print the
+The identation level of the output for the `"json"` and `"angular"` formatters. Pass `2` or `4` for a more readable
 output file.
 
 #### options.module
 Type: `String`
 Default value: `"less"`
 
-Only relevant for the `"angular"` formatter. Controls the angular module to which the variable constant is attached.
+The module name used by the `"angular"` formatter. This is the module to which the exported variables are attached.
  
 #### options.constant
 Type: `String`
 Default value: `"vars"`
 
-Only relevant for the `"angular"` formatter. Controls the exported constant name.
+The name of the exported constant used by the `"angular"` formatter.
 
 ### Usage Examples
 
@@ -81,13 +81,12 @@ grunt.initConfig({
 });
 ```
 
-#### `input.less`
+Then, given the following `input.less`,
 ```less
 @x: 2;
 @y: 3;
 ```
-
-#### `vars.json`
+the output `vars.json` will be
 ```json
 {"x":2,"y":3}
 ```
@@ -111,13 +110,12 @@ grunt.initConfig({
 })
 ```
 
-#### `input.less`
+Then, given the following `input.less`,
 ```less
 @x: 2;
 @y: 3;
 ```
-
-#### `vars.json`
+the output `vars.js` will be
 ```js
 angular.module("myModule").constant("myLessVars", {
   x: 2,
@@ -130,7 +128,7 @@ angular.module("myModule").constant("myLessVars", {
 All source code, tests, and meta-code (build tools and configuration) are written in EcmaScript 6 and transpiled using
 [Babel](http://babeljs.io/). The command `grunt babel` will transpile the `src` directory into the `tasks` directory
 which allows this module to be dropped in as a Grunt plugin. The Babel runtime/polyfill is **not** used outside of
-developer tools, and we would like to keep it this way.
+developer tools, and I would like to keep it this way.
 
 ### Code style `grunt style`
 Code style is enforced using [JSCS](http://jscs.info/). The style guide is located in `.jscsrc`.
