@@ -13,6 +13,7 @@ export default {
         indent: 4
     }),
     imported: caseConfig('test/case/imported', {
+        paths: [ 'test/case/imported' ],
         format: 'json',
         indent: 4
     }),
