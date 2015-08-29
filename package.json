@@ -20,7 +20,9 @@
   },
   "scripts": {
     "test": "grunt test",
-    "prepublish": "grunt babel"
+    "preversion": "grunt check",
+    "version": "grunt babel && git add --all tasks",
+    "postversion": "git push && git push --tags"
   },
   "devDependencies": {
     "babel": "^5.8.21",

@@ -10,7 +10,10 @@ lint:
 style:
 - 'jscs'
 
-default:
+check:
 - 'test'
 - 'lint'
 - 'style'
+
+default:
+- 'check'
