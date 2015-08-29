@@ -11,6 +11,10 @@ export default {
     jsonIndent: caseConfig('test/case/json-indent', {
         format: 'json',
         indent: 4
+    }),
+    imported: caseConfig('test/case/imported', {
+        format: 'json',
+        indent: 4
     })
 };
 

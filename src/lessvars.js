@@ -22,13 +22,13 @@ export default grunt => {
         const promises = files.map(file => {
             const dest = file.dest;
             const srcPromises = file.src.map(src =>
-                nfcall(readFile, src).then(contents => process(contents, options))
+                nfcall(readFile, src).then(contents => process(contents, options)).catch(grunt.fatal)
             );
 
             return all(srcPromises).then(results => ({
                 dest: dest,
                 data: merge(...results)
-            }));
+            })).catch(grunt.fatal);
         });
 
         // format output
@@ -36,9 +36,7 @@ export default grunt => {
         all(promises).then(results => {
             async.each(results, (file, next) => {
                 writeFile(file.dest, format(file.data, options), next);
-            }, function () {
-                done();
-            });
-        });
+            }, done);
+        }).catch(grunt.fatal);
     });
 };
