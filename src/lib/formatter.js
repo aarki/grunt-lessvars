@@ -1,6 +1,6 @@
 export default { json, angular };
 
-function json(data, options={}) {
+function json(data, options) {
     const indent = options.indent;
     if (indent) {
         return JSON.stringify(data, null, indent);
@@ -9,6 +9,6 @@ function json(data, options={}) {
     return JSON.stringify(data);
 }
 
-function angular(data, options={}) {
+function angular(data, options) {
     return `angular.module("${ options.module }").constant("${ options.constant }",${ json(data, options) });`;
 }

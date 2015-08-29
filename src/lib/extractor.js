@@ -1,11 +1,9 @@
 import {camel} from 'change-case';
 import {parse, contexts, transformTree} from 'less';
-import grunt from 'grunt';
 
 export function process(contents, options) {
     return parse(contents + '', options)
-        .then(root => collect(root, new contexts.Eval({}, [ transformTree(root) ])))
-        .catch(err => grunt.fatal(err));
+        .then(root => collect(root, new contexts.Eval({}, [ transformTree(root) ])));
 }
 
 function collect(node, context, variables={}) {
