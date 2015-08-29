@@ -20,6 +20,111 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks('grunt-lessvars');
 ```
 
+## The "lessvars" task
+
+### Overview
+In your project's Gruntfile, add a section named `lessvars` to the data object passed into `grunt.initConfig()`.
+
+```js
+grunt.initConfig({
+    lessvars: {
+        options: {
+            // Task-specific options go here.
+        },
+        target: {
+            // Target-specific file lists and/or options go here
+        }
+    }
+});
+```
+
+### Options
+
+#### options.format
+Type: `String|Function`
+Default value: `"json"`
+
+Format of the output file. Can be one of `"json"`, `"angular"`, or a custom function. The function signature should be
+`format(vars:Object, options:Object)`.
+
+#### options.indent
+Type: `Number`
+Default value: `0`
+
+Control the identation level of the output for both `"json"` and `"angular"` formatters. Pass `2` to pretty-print the
+output file.
+
+#### options.module
+Type: `String`
+Default value: `"less"`
+
+Only relevant for the `"angular"` formatter. Controls the angular module to which the variable constant is attached.
+ 
+#### options.constant
+Type: `String`
+Default value: `"vars"`
+
+Only relevant for the `"angular"` formatter. Controls the exported constant name.
+
+### Usage Examples
+
+#### Default Options
+```js
+grunt.initConfig({
+    lessvars: {
+        myTarget: {
+            files {
+                'vars.json': 'input.less'
+            }
+        }
+    }
+});
+```
+
+#### `input.less`
+```less
+@x: 2;
+@y: 3;
+```
+
+#### `vars.json`
+```json
+{"x":2,"y":3}
+```
+
+#### Custom Options
+```js
+grunt.initConfig({
+    lessvars: {
+        myTarget: {
+            options: {
+                format: 'angular',
+                module: 'myModule',
+                constant: 'myLessVars',
+                indent: 2
+            },
+            files: {
+                'vars.js': 'input.less'
+            }
+        }
+    }
+})
+```
+
+#### `input.less`
+```less
+@x: 2;
+@y: 3;
+```
+
+#### `vars.json`
+```js
+angular.module("myModule").constant("myLessVars", {
+  x: 2,
+  y: 3
+});
+```
+
 ## Contributing
 
 ### Code style `grunt style`
