@@ -8,5 +8,6 @@ describe('grunt task', () => {
     it('should output indented JSON', check('test/case/json-indent'));
     it('should output Angular constant with default configuration', check('test/case/json'));
     it('should correctly process variables from imported files', check('test/case/imported'));
+    it('should support custom format functions', check('test/case/custom-format'));
 
 });

@@ -15,6 +15,9 @@ export default {
     imported: caseConfig('test/case/imported', {
         format: 'json',
         indent: 4
+    }),
+    customFormat: caseConfig('test/case/custom-format', {
+        format: vars => Object.keys(vars).map(name => `var ${ name } = ${ vars[name] };`).join('\n')
     })
 };
 
