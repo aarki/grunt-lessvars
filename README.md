@@ -169,9 +169,9 @@ Then, given the following `input.less`,
 the output `vars.json` will be
 ```json
 {
-  "x": '2em',
+  "x": "2em",
   "y": 3,
-  "z": '4%'
+  "z": "4%"
 }
 ```
 
