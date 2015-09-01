@@ -45,11 +45,11 @@
     "gruntplugin"
   ],
   "dependencies": {
-    "async": "^1.4.2",
-    "change-case": "^2.3.0",
-    "less": "^2.5.1",
-    "merge": "^1.2.0",
-    "q": "^1.4.1"
+    "async": "~1.4.2",
+    "change-case": "~2.3.0",
+    "less": "~2.5.1",
+    "merge": "~1.2.0",
+    "q": "~1.4.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
