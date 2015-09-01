@@ -81,6 +81,10 @@ the ampersand stripped off. If a string is passed, it is interpreted as a method
 [change-case](https://www.npmjs.com/package/change-case) library. If an array is passed, each item is interpreted as a
 separate alias, and the output may contain multiple versions of each variable.
 
+#### LESS compiler options
+
+Additional options will be forwarded to the [LESS compiler](http://lesscss.org/usage/#command-line-usage-options).
+
 ### Usage Examples
 
 #### Default Options
@@ -137,6 +141,71 @@ angular.module("myModule").constant("myLessVars", {
   y: 3
 });
 ```
+
+#### Units
+```js
+grunt.initConfig({
+    lessvars: {
+        myTarget: {
+            options: {
+                format: 'json',
+                indent: 2,
+                units: [ 'em', '%' ]
+            },
+            files: {
+                'vars.json': 'input.less'
+            }
+        }
+    }
+});
+```
+
+Then, given the following `input.less`,
+```less
+@x: 2em;
+@y: 3px;
+@z: 4%;
+```
+the output `vars.json` will be
+```json
+{
+  "x": '2em',
+  "y": 3,
+  "z": '4%'
+}
+```
+
+#### Renaming
+```js
+grunt.initConfig({
+    lessvars: {
+        myTarget: {
+            options: {
+                format: 'json',
+                indent: 2,
+                rename: [ 'camel', 'snake', function (name) { return 'LESS' + name; } ]
+            },
+            files: {
+                'vars.json': 'input.less'
+            }
+        }
+    }
+});
+```
+
+Then, given the following `input.less`,
+```less
+@my-var: 2;
+```
+the output `vars.json` will be
+```json
+{
+  "myVar": 2,
+  "my_var": 2,
+  "LESSmy-var": 2
+}
+```
+
 
 ## Contributing
 
