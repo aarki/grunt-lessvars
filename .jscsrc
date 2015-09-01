@@ -27,7 +27,6 @@
   },
   "disallowNewlineBeforeBlockStatements": true,
   "disallowOperatorBeforeLineBreak": true,
-  "disallowParenthesesAroundArrowParam": true,
   "requireDotNotation": true,
   "disallowQuotedKeysInObjects": true,
   "disallowSpaceAfterObjectKeys": true,
