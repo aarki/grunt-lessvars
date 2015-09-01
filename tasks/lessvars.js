@@ -36,7 +36,11 @@ exports['default'] = function (grunt) {
             format: 'json',
             module: 'less',
             constant: 'vars',
-            indent: 0
+            indent: 0,
+            units: true,
+            rename: function rename(name) {
+                return name;
+            }
         });
 
         // read each src/dest pair
