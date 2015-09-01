@@ -1,16 +1,16 @@
 {
   "disallowCurlyBraces": [
     "if",
-    "else"
+    "else",
+    "case",
+    "default"
   ],
   "requireCurlyBraces": [
     "for",
     "while",
     "do",
     "try",
-    "catch",
-    "case",
-    "default"
+    "catch"
   ],
   "disallowDanglingUnderscores": true,
   "disallowEmptyBlocks": true,
