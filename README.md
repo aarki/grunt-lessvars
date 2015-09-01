@@ -227,4 +227,11 @@ to add integration tests.
 All of the above above can be run with the `grunt` command (no arguments).
 
 ## Release History
-_(Nothing yet)_
+
+### 0.3.0
+- **Breaking change** Added options to control variable naming/aliases. Previously, variables were output under the
+camel-cased name as well as the original variable name. Now, by default, only the original name is used. See the
+`rename` option.
+- Added options to control how units are processed in dimension values.
+- Fixed processing of quoted LESS values (quotes will be dropped in the output). 
+- Fixed processing of expression LESS values (will be output as arrays).
