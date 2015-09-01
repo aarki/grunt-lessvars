@@ -1,9 +1,16 @@
-import {camel} from 'change-case';
+import cc from 'change-case';
 import {parse, contexts, transformTree} from 'less';
 
-export function process(contents, options={ units: true }) {
+export function process(contents, options={}) {
+    let { rename=(name => name), units=true } = options;  // jshint ignore:line
+    const norm = item => typeof item === 'string' ? cc[item] : item;
+
+    // normalize rename function
+    rename = Array.isArray(rename) ? rename.map(norm) : [ norm(rename) ];
+
+    // invoke LESS parser, collect variables from AST
     return parse(contents.toString(), options)
-        .then(root => collect(root, options, new contexts.Eval(options, [ transformTree(root) ])));
+        .then(root => collect(root, { rename, units }, new contexts.Eval(options, [ transformTree(root) ])));
 }
 
 // collect variables from node, in the given context
@@ -17,8 +24,10 @@ function collect(node, options, context, variables={}) {
             const name = rule.name.substring(1);
             const value = rule.value.eval(context);
 
-            // save under camelCase and original-dashed name
-            variables[ name ] = variables[ camel(name) ] = toJS(value, options, context);
+            // save under all aliases
+            for (let fn of options.rename) {
+                variables[ fn(name) ] = toJS(value, options, context);
+            }
         }
     }
 

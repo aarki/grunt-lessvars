@@ -72,6 +72,15 @@ Default value: `true`
 
 A boolean value indicating whether to drop or keep units in dimensions, or an array containing units to preserve.
 
+#### options.rename
+Type: `String|Function(name:String):String|Array<String|Function>`
+Default value: `name => name`
+
+How to rename LESS variables into their JS counterparts. The function is given the original LESS variable name, with
+the ampersand stripped off. If a string is passed, it is interpreted as a method name from the
+[change-case](https://www.npmjs.com/package/change-case) library. If an array is passed, each item is interpreted as a
+separate alias, and the output may contain multiple versions of each variable.
+
 ### Usage Examples
 
 #### Default Options

@@ -17,7 +17,8 @@ export default grunt => {
             module: 'less',
             constant: 'vars',
             indent: 0,
-            units: true
+            units: true,
+            rename: name => name
         });
 
         // read each src/dest pair
