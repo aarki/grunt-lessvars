@@ -42,6 +42,24 @@ describe('extractor', () => {
         });
     });
 
+    it('should reject on parse error', () => {
+        let contents = `
+            @a: 10px /* no semicolon */
+        `;
+
+        return expect(process(contents)).to.be.rejectedWith(/unrecognised input/i);
+    });
+
+    it('should forward options to LESS compiler', () => {
+        let contents = `
+            @a: 10px + 10em;
+        `;
+
+        return expect(process(contents, {
+            strictUnits: true
+        })).to.be.rejectedWith(/incompatible units/i);
+    });
+
     describe('data types', () => {
         it('should output pure numeric values as numbers',
             () => expect(process('@x: 2;')).to.eventually.have.property('x', 2));

@@ -3,7 +3,7 @@ import {parse, contexts, transformTree} from 'less';
 
 export function process(contents, options) {
     return parse(contents.toString(), options)
-        .then(root => collect(root, new contexts.Eval({}, [ transformTree(root) ])));
+        .then(root => collect(root, new contexts.Eval(options, [ transformTree(root) ])));
 }
 
 function collect(node, context, variables={}) {
@@ -32,7 +32,7 @@ function toJS(node, context) {
             let unit = node.unit.toCSS(context);
             let value = node.value;
 
-            return unit ? value + unit : value;
+            return unit ? node.toCSS(context) : value;
 
         // drop quotes from quoted values
         case 'Quoted':
