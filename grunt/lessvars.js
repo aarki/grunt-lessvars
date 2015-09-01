@@ -22,7 +22,11 @@ export default {
     }),
     multipleInputs: caseConfig('test/case/multi-input', {
         format: 'json'
-    }, [ 'input.less', 'more.less' ])
+    }, [ 'input.less', 'more.less' ]),
+    types: caseConfig('test/case/types', {
+        format: 'json',
+        indent: 4
+    })
 };
 
 function caseConfig(folder, options={}) {

@@ -3,7 +3,7 @@ import {process} from '../../src/lib/extractor';
 
 describe('extractor', () => {
 
-    it('should parse simple variable declarations', function () {
+    it('should parse simple variable declarations', () => {
         let contents = vars({
             x: '2',
             y: '2',
@@ -17,7 +17,7 @@ describe('extractor', () => {
         });
     });
 
-    it('should ignore non-variable nodes', function () {
+    it('should ignore non-variable nodes', () => {
         let contents = `
             a { color: red; }
             ${ vars({ x: '2px' }) }
@@ -29,7 +29,7 @@ describe('extractor', () => {
         });
     });
 
-    it('should parse nested variable declarations', function () {
+    it('should parse nested variable declarations', () => {
         let contents = `
             a {
                 ${ vars({ red: 'red' }) }
@@ -40,6 +40,20 @@ describe('extractor', () => {
         return expect(process(contents)).to.eventually.eql({
             red: 'red'
         });
+    });
+
+    describe('data types', () => {
+        it('should output pure numeric values as numbers',
+            () => expect(process('@x: 2;')).to.eventually.have.property('x', 2));
+
+        it('should preserve units in dimensions whey they are present',
+            () => expect(process('@x: 2px;')).to.eventually.have.property('x', '2px'));
+
+        it('should drop quotes from quoted values',
+            () => expect(process('@x: "value";')).to.eventually.have.property('x', 'value'));
+
+        it('should transform expressions into arrays',
+            () => expect(process('@x: 10px 10em;')).to.eventually.eql({ x: [ '10px', '10em' ] }));
     });
 
 });

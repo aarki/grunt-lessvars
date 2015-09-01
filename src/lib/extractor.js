@@ -14,16 +14,34 @@ function collect(node, context, variables={}) {
             collect(rule.root, context, variables);
         else if (rule.variable === true) {
             const name = rule.name.substring(1);
-            const value = rule.value.eval(context).toCSS(context);
+            const value = rule.value.eval(context);
 
             // save under camelCase and original-dashed name
-            variables[ name ] = variables[ camel(name) ] = normalize(value);
+            variables[ name ] = variables[ camel(name) ] = toJS(value, context);
         }
     }
 
     return variables;
 }
 
-function normalize(value) {
-    return isNaN(+value) ? value : +value;
+// modify how value nodes are coerced into JS values, if different from CSS
+function toJS(node, context) {
+    switch (node.type) {
+        // preserve purely numeric values
+        case 'Dimension':
+            let unit = node.unit.toCSS(context);
+            let value = node.value;
+
+            return unit ? value + unit : value;
+
+        // drop quotes from quoted values
+        case 'Quoted':
+            return node.value;
+
+        // recursively transform expressions into arrays
+        case 'Expression':
+            return node.value.map(child => toJS(child, context));
+    }
+
+    return node.toCSS(context);
 }
