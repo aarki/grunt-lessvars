@@ -1,4 +1,4 @@
-# grunt-lessvars
+# grunt-lessvars [![Build Status](https://travis-ci.org/aarki/grunt-lessvars.svg?branch=master)](https://travis-ci.org/aarki/grunt-lessvars) [![Coverage Status](https://coveralls.io/repos/aarki/grunt-fontcustom/badge.svg?branch=master&service=github)](https://coveralls.io/github/aarki/grunt-fontcustom?branch=master)
 
 > Parse a set of LESS files, extract variables, and write to a JavaScript file.
 
