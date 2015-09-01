@@ -60,6 +60,23 @@ describe('extractor', () => {
         })).to.be.rejectedWith(/incompatible units/i);
     });
 
+    describe('units processing', () => {
+
+        it('should drop all when false is passed',
+            () => expect(process('@a: 2px;', { units: false })).to.eventually.eql({
+                a: 2
+            }));
+
+        it('should keep only given units when array is passed',
+            () => expect(process(vars({ a: '1px', b: '2em', c: '3%', d: '4' }), { units: [ 'px', '%' ] })).to.eventually.eql({
+                a: '1px',
+                b: 2,
+                c: '3%',
+                d: 4
+            }));
+
+    });
+
     describe('data types', () => {
         it('should output pure numeric values as numbers',
             () => expect(process('@x: 2;')).to.eventually.have.property('x', 2));

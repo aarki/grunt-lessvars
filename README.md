@@ -66,6 +66,12 @@ Default value: `"vars"`
 
 The name of the exported constant used by the `"angular"` formatter.
 
+#### options.units
+Type: `Boolean|Array<String>`
+Default value: `true`
+
+A boolean value indicating whether to drop or keep units in dimensions, or an array containing units to preserve.
+
 ### Usage Examples
 
 #### Default Options

@@ -16,7 +16,8 @@ export default grunt => {
             format: 'json',
             module: 'less',
             constant: 'vars',
-            indent: 0
+            indent: 0,
+            units: true
         });
 
         // read each src/dest pair
