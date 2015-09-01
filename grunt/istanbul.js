@@ -35,7 +35,7 @@ export default grunt => {
             const reporter = new Reporter();
 
             collector.add(global[ coverageVariable ]);
-            reporter.addAll([ 'text', 'html' ]);
+            reporter.addAll([ 'text', 'html', 'lcov' ]);
 
             // write coverage results
             reporter.write(collector, false, this.async());
