@@ -12,6 +12,10 @@ var _fs = require('fs');
 
 var _q = require('q');
 
+var _path = require('path');
+
+var _path2 = _interopRequireDefault(_path);
+
 var _async = require('async');
 
 var _async2 = _interopRequireDefault(_async);
@@ -65,8 +69,9 @@ exports['default'] = function (grunt) {
 
         // wait for all files to get parsed, then write the results
         (0, _q.all)(promises).then(function (results) {
-            _async2['default'].each(results, function (file, next) {
-                (0, _fs.writeFile)(file.dest, format(file.data, options), next);
+            _async2['default'].each(results, function (f, next) {
+                grunt.file.mkdir(_path2['default'].dirname(f.dest));
+                (0, _fs.writeFile)(f.dest, format(f.data, options), next);
             }, done);
         })['catch'](grunt.fatal);
     });

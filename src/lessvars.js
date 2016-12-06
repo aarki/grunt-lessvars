@@ -1,5 +1,6 @@
 import {writeFile, readFile} from 'fs';
 import {nfcall, all} from 'q';
+import path from 'path';
 import async from 'async';
 import merge from 'merge';
 
@@ -39,8 +40,9 @@ export default grunt => {
 
         // wait for all files to get parsed, then write the results
         all(promises).then(results => {
-            async.each(results, (file, next) => {
-                writeFile(file.dest, format(file.data, options), next);
+            async.each(results, (f, next) => {
+                grunt.file.mkdir(path.dirname(f.dest));
+                writeFile(f.dest, format(f.data, options), next);
             }, done);
         }).catch(grunt.fatal);
     });
