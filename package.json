@@ -1,7 +1,7 @@
 {
   "name": "grunt-lessvars",
   "description": "Parse a set of LESS files, extract variables, and write to a JavaScript file.",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "homepage": "https://github.com/aarki/grunt-lessvars",
   "author": {
     "name": "Igor Raush",
